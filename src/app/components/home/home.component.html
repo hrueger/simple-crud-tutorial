@@ -1,1 +1,18 @@
-<p>home works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <ul>
+                <li *ngFor="let book of books">{{ book }}</li>
+            </ul>
+        </div>
+        <div class="col-6">
+            <input class="form-control" placeholder="Neues Buch erstellen" [(ngModel)]="newBookTitle">
+
+            <button class="mx-auto d-block mt-2 btn btn-outline-success" (click)="addNewBook()">Buch hinzufügen</button>
+
+            <div class="alert alert-primary" *ngIf="newBookTitle != ''">
+                Wenn Sie auf den Button klicken, wird ein neues Buch namens {{ newBookTitle }} erstellt.
+            </div>
+        </div>
+    </div>
+</div>
