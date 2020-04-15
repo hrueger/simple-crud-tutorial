@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-home',
@@ -7,23 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
+  constructor(private storageService: StorageService) {}
+
   public bookTitle: string = "Die unendliche Geschichte";
   public showAlert: boolean = true;
   public newBookTitle: string = "";
   public readonly maxTitleLength: number = 20;
-  public books: string[] = [
-    "Die unendliche Geschichte",
-    "Die drei ??? Teil 1",
-    "Die drei ??? Teil 2",
-    "Die drei ??? Teil 3",
-    "Die drei ??? Teil 4",
-    "Die drei ??? Teil 5",
-    "Die drei ??? Teil 6"
-  ];
-
-  constructor() { }
+  public books: string[] = [];
 
   ngOnInit(): void {
+    this.books = this.storageService.getBooks();
   }
 
   public transformBookTitle(title): string {
@@ -33,6 +27,7 @@ export class HomeComponent implements OnInit {
   public addNewBook() {
     // this.showAlert = !this.showAlert;
     this.books.push(this.newBookTitle);
+    this.storageService.setBooks(this.books);
     this.newBookTitle = "";
   }
 
