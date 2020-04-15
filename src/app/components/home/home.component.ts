@@ -10,6 +10,7 @@ export class HomeComponent implements OnInit {
   public bookTitle: string = "Die unendliche Geschichte";
   public showAlert: boolean = true;
   public newBookTitle: string = "";
+  public readonly maxTitleLength: number = 20;
   public books: string[] = [
     "Die unendliche Geschichte",
     "Die drei ??? Teil 1",

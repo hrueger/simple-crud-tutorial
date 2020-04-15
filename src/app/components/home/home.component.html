@@ -8,10 +8,11 @@
         <div class="col-6">
             <input class="form-control" placeholder="Neues Buch erstellen" [(ngModel)]="newBookTitle">
 
-            <button class="mx-auto d-block mt-2 btn btn-outline-success" (click)="addNewBook()">Buch hinzufügen</button>
+            <button class="mx-auto d-block mt-2 btn btn-outline-success" [disabled]="newBookTitle.length > maxTitleLength" (click)="addNewBook()">Buch hinzufügen</button>
 
-            <div class="alert alert-primary" *ngIf="newBookTitle != ''">
-                Wenn Sie auf den Button klicken, wird ein neues Buch namens {{ newBookTitle }} erstellt.
+            <div [class]="'alert alert-' + (newBookTitle.length <= maxTitleLength ? 'primary' : 'warning')" *ngIf="newBookTitle != ''">
+                <span *ngIf="newBookTitle.length <= maxTitleLength">Wenn Sie auf den Button klicken, wird ein neues Buch namens <i>{{ newBookTitle }}</i> erstellt.</span>
+                <span *ngIf="newBookTitle.length > maxTitleLength">Der Titel ist mit {{newBookTitle.length}} Zeichen {{ newBookTitle.length >= maxTitleLength * 2 ? 'viel ' : ''}}zu lang!</span>
             </div>
         </div>
     </div>
