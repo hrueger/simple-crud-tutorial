@@ -1,15 +1,31 @@
-<div class="container">
+<div class="card p-3">
     <div class="row">
         <div class="col-6">
-            <ul>
-                <li *ngFor="let book of books">{{ book.title }}, Autoren: {{ book.authors }}</li>
-            </ul>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Titel</th>
+                        <th>Author(en)</th>
+                        <th>Aktionen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let book of books">
+                        <td>{{ book.title }}</td>
+                        <td>{{ book.authors }}</td>
+                        <td>
+                            <button class="btn btn-outline-primary" (click)="editBook(book)">Bearbeiten</button>
+                            <button class="btn btn-outline-danger" (click)="deleteBook(book)">Löschen</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div class="col-6">
             <input class="form-control" placeholder="Neues Buch erstellen" [(ngModel)]="newBookTitle">
             <input class="form-control" placeholder="Autor eingeben" [(ngModel)]="newBookAuthor">
 
-            <button class="mx-auto d-block mt-2 btn btn-outline-success" [disabled]="newBookTitle.length > maxTitleLength" (click)="addNewBook()">Buch hinzufügen</button>
+            <button class="mx-auto d-block mt-2 btn btn-outline-success" [disabled]="newBookTitle.length > maxTitleLength" (click)="addNewBook()">{{isEditing ? 'Änderungen speichern' : 'Buch hinzufügen'}}</button>
 
             <div [class]="'alert alert-' + (newBookTitle.length <= maxTitleLength ? 'primary' : 'warning')" *ngIf="newBookTitle != ''">
                 <span *ngIf="newBookTitle.length <= maxTitleLength">Wenn Sie auf den Button klicken, wird ein neues Buch namens <i>{{ newBookTitle }}</i> erstellt.</span>
