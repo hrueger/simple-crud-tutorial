@@ -6,13 +6,17 @@
                     <tr>
                         <th>Titel</th>
                         <th>Author(en)</th>
+                        <th>Preis</th>
+                        <th>Veröffentlicht am</th>
                         <th>Aktionen</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let book of books">
                         <td>{{ book.title }}</td>
-                        <td>{{ book.authors }}</td>
+                        <td>{{ book.authors | joinAuthors }}</td>
+                        <td>{{ book.price | currency:'EUR' }}</td>
+                        <td>{{ book.publishDate | date:'shortDate' }} {{ book.publishDate | date:'shortTime' }}</td>
                         <td>
                             <button class="btn btn-outline-primary" (click)="editBook(book)">Bearbeiten</button>
                             <button class="btn btn-outline-danger" (click)="deleteBook(book)">Löschen</button>

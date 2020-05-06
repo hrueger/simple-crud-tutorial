@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
       this.books = this.books.map(function (b) {
         if (b.id == that.isEditing) {
           b.title = that.newBookTitle;
-          b.authors = [that.newBookAuthor];
+          b.authors = that.newBookAuthor.split(", ");
         }
         return b;
       });
@@ -43,7 +43,9 @@ export class HomeComponent implements OnInit {
       const book = new Book();
       book.title = this.newBookTitle;
       book.id = Math.round(Math.random() * 1000000);
-      book.authors = this.newBookAuthor ? [this.newBookAuthor] : undefined;
+      book.authors = this.newBookAuthor.split(", ");
+      book.price = 10;
+      book.publishDate = new Date();
       this.books.push(book);
     }
     this.newBookTitle = "";
