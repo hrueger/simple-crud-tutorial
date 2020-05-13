@@ -26,14 +26,38 @@
             </table>
         </div>
         <div class="col-6">
-            <input class="form-control" placeholder="Neues Buch erstellen" [(ngModel)]="newBookTitle">
-            <input class="form-control" placeholder="Autor eingeben" [(ngModel)]="newBookAuthor">
+            <form [formGroup]="newBookForm">
+                <div>
+                    <input class="form-control" placeholder="Neues Buch erstellen" formControlName="title" [class.is-valid]="newBookForm.controls.title.valid" [class.is-invalid]="submitted && newBookForm.controls.title.invalid">
+                    <div class="valid-feedback">
+                        Passt!
+                    </div>
+                    <div *ngIf="newBookForm.controls.title.errors">
+                        <div class="invalid-feedback" *ngIf="newBookForm.controls.title.errors.required">
+                            Dieses Feld muss ausgefüllt werden!
+                        </div>
+                        <div class="invalid-feedback" *ngIf="newBookForm.controls.title.errors.minlength">
+                            Der Titel muss länger als 2 Zeichen sein. Füge noch {{ newBookForm.controls.title.errors.minlength.requiredLength - newBookForm.controls.title.errors.minlength.actualLength }} Zeichen hinzu!
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <input class="form-control" placeholder="Autor eingeben" formControlName="author" [class.is-valid]="newBookForm.controls.author.valid" [class.is-invalid]="submitted && newBookForm.controls.author.invalid">
 
-            <button class="mx-auto d-block mt-2 btn btn-outline-success" [disabled]="newBookTitle.length > maxTitleLength" (click)="addNewBook()">{{isEditing ? 'Änderungen speichern' : 'Buch hinzufügen'}}</button>
+                    <div class="valid-feedback">
+                        Passt!
+                    </div>
+                    <div class="invalid-feedback">
+                        Dieses Feld muss ausgefüllt werden!
+                    </div>
+                </div>
 
-            <div [class]="'alert alert-' + (newBookTitle.length <= maxTitleLength ? 'primary' : 'warning')" *ngIf="newBookTitle != ''">
-                <span *ngIf="newBookTitle.length <= maxTitleLength">Wenn Sie auf den Button klicken, wird ein neues Buch namens <i>{{ newBookTitle }}</i> erstellt.</span>
-                <span *ngIf="newBookTitle.length > maxTitleLength">Der Titel ist mit {{newBookTitle.length}} Zeichen {{ newBookTitle.length >= maxTitleLength * 2 ? 'viel ' : ''}}zu lang!</span>
+                <button class="mx-auto d-block mt-2 btn btn-outline-success" [disabled]="newBookForm.controls.title.value.length > maxTitleLength" (click)="addNewBook()">{{isEditing ? 'Änderungen speichern' : 'Buch hinzufügen'}}</button>
+            </form>
+
+            <div [class]="'alert alert-' + (newBookForm.controls.title.value.length <= maxTitleLength ? 'primary' : 'warning')" *ngIf="newBookForm.controls.title.value != ''">
+                <span *ngIf="newBookForm.controls.title.value.length <= maxTitleLength">Wenn Sie auf den Button klicken, wird ein neues Buch namens <i>{{ newBookForm.controls.title.value }}</i> erstellt.</span>
+                <span *ngIf="newBookForm.controls.title.value.length > maxTitleLength">Der Titel ist mit {{newBookForm.controls.title.value.length}} Zeichen {{ newBookForm.controls.title.value.length >= maxTitleLength * 2 ? 'viel ' : ''}}zu lang!</span>
             </div>
         </div>
     </div>
