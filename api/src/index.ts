@@ -1,4 +1,38 @@
 import * as express from "express";
+import routes from "./routes/index";
+import { createConnection } from "typeorm";
+
+const app = express();
+
+
+app.use("/api", routes);
+
+app.listen(3000, function () {
+  console.log("Server started on port 3000!");
+});
+
+
+createConnection({
+  type: "mysql",
+  host: "localhost",
+  username: "root",
+  password: "",
+  database: "simpleCrudTutorialDB"
+})
+
+
+
+/*
+GET -> Anzeige
+POST -> Hinzuzufügen / Aktualisieren
+DELETE -> Löschen
+*/
+
+/*
+
+
+
+import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as path from "path";
 
@@ -36,9 +70,4 @@ app.use("/", express.static(path.join(__dirname, "../frontend/dist/simple-crud")
 app.listen(3000, () => {
   console.log("Server started on port 3000!");
 });
-
-/*
-GET -> Anzeige
-POST -> Hinzuzufügen / Aktualisieren
-DELET -> Löschen
 */
